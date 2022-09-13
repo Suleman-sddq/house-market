@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import OAuth from "../components/OAuth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
@@ -19,13 +22,31 @@ function SignIn() {
       [e.target.id]: e.target.value,
     }));
   };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      if (userCredentials.user) {
+        navigate("/profile");
+      }
+    } catch (error) {
+      toast.error("Incorrect Credentials");
+    }
+  };
   return (
     <>
       <div className="pageContainer">
         <header>
           <p className="pageHeader">Welcome Back</p>
         </header>
-        <form>
+        <form onSubmit={onSubmit}>
           <input
             type="email"
             className="emailInput"
@@ -62,7 +83,7 @@ function SignIn() {
           </div>
         </form>
 
-        {/* Google OAuth */}
+        <OAuth />
         <Link to="/sign-up" className="registerLink">
           Sign Up Instead
         </Link>
