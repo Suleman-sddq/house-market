@@ -8,6 +8,7 @@ html::-webkit-scrollbar {
 }
 
 body {
+  zoom: 80%;
   font-family: "Montserrat", sans-serif;
   background-color: #f2f4f8;
   margin: 0;
