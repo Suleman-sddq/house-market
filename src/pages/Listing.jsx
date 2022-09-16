@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { getDoc, doc } from "firebase/firestore";
@@ -6,6 +6,15 @@ import { getAuth } from "firebase/auth";
 import { db } from "../firebase.config";
 import Spinner from "../components/Spinner";
 import shareIcon from "../assets/svg/shareIcon.svg";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+
+// import required modules
+import { Pagination } from "swiper";
 
 function Listing() {
   const [listing, setListing] = useState(null);
@@ -26,7 +35,7 @@ function Listing() {
       }
     };
     fetchListing();
-  }, [navigate, params.listingId]);
+  }, [navigate]);
 
   if (loading) {
     return <Spinner />;
@@ -34,7 +43,36 @@ function Listing() {
 
   return (
     <main>
-      {/* Slider */}
+      <Swiper
+        pagination={{
+          dynamicBullets: true,
+        }}
+        modules={[Pagination]}
+      >
+        {listing.imageUrls.map((url, index) => (
+          <SwiperSlide key={index}>
+            <div
+              style={{
+                backgroundImage: `url(${listing.imageUrls[index]})`,
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                height: "300px",
+              }}
+              className="swiperSlideDiv"
+            >
+              {/* <img
+                src={listing.imageUrls[index]}
+                alt="image"
+                width="100%"
+                no-repeat
+                cover
+              /> */}
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
       <div
         className="shareIconDiv"
         onClick={() => {

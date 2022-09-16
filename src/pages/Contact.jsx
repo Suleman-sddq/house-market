@@ -15,7 +15,7 @@ function Contact() {
 
   useEffect(() => {
     const getOwner = async () => {
-      console.log(params.ownerId);
+      // console.log(params.ownerId);
       const docRef = doc(db, "users", params.ownerId);
       const docSnap = await getDoc(docRef);
 
