@@ -16,9 +16,9 @@ import Spinner from "../components/Spinner";
 import ListingItem from "../components/ListingItem";
 
 function Offers() {
+  const [lastFetchedListing, setLastFetchedListing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [listings, setListings] = useState(null);
-  const [lastFetchedListing, setLastFetchedListing] = useState(null);
 
   // const params = useParams();
 
